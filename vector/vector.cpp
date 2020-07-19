@@ -26,7 +26,7 @@ public:
         main_arr = (TYPE*) malloc(n*sizeof(TYPE));
     };
     //Creates vector with elements of an array in range [arr_start,arr_end)
-    myVector(TYPE * arr_start,TYPE * arr_end){
+    myVector(const TYPE * arr_start,const TYPE * arr_end){
         int n = arr_end-arr_start;
 
         curr_size = 0;
@@ -34,7 +34,7 @@ public:
 
         main_arr = (TYPE*) malloc(n*sizeof(TYPE));
 
-        for(TYPE* i = arr_start; i!=arr_end; ++i){
+        for(TYPE* i = (TYPE*)arr_start; i!=(TYPE*)arr_end; ++i){
             main_arr[curr_size++] = *i;
         }
     };
