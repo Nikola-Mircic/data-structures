@@ -10,7 +10,7 @@ private:
     TYPE * temp_arr;//Array used for creating bigger array
 
     void double_arr(){
-        temp_arr = (TYPE*) malloc(2*reserved_size*sizeof(TYPE));
+        temp_arr = new TYPE[2*reserved_size];
         for(int i=0;i<curr_size;++i){
             temp_arr[i] = main_arr[i];
         }
@@ -20,10 +20,10 @@ private:
     }
 public:
     //Creates empty vector for n elements
-    myVector(int n){
+    myVector(const int n){
         curr_size = 0;
         reserved_size = n;
-        main_arr = (TYPE*) malloc(n*sizeof(TYPE));
+        main_arr = new TYPE[n];
     };
     //Creates vector with elements of an array in range [arr_start,arr_end)
     myVector(const TYPE * arr_start,const TYPE * arr_end){
@@ -32,12 +32,21 @@ public:
         curr_size = 0;
         reserved_size = n;
 
-        main_arr = (TYPE*) malloc(n*sizeof(TYPE));
+        main_arr = new TYPE[n];
 
         for(TYPE* i = (TYPE*)arr_start; i!=(TYPE*)arr_end; ++i){
             main_arr[curr_size++] = *i;
         }
     };
+
+    myVector(const myVector<TYPE>& vec){
+        curr_size = vec.curr_size;
+        reserved_size = vec.reserved_size;
+        main_arr = new TYPE[reserved_size];
+
+        for(int i=0;i<curr_size;++i)
+            main_arr[i] = vec.main_arr[i];
+    }
 
     void add_element(TYPE element){
         if(curr_size == reserved_size)
@@ -51,7 +60,7 @@ public:
     }
 
     //Returns element at index 'idx';
-    TYPE get(int idx){
+    TYPE& get(int idx){
         return main_arr[idx];
     }
 

@@ -11,5 +11,6 @@ void printTextOnStart(){
 int main()
 {
     printTextOnStart();
+
     return 0;
 }
