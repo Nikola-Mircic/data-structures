@@ -1,7 +1,7 @@
 #include <cstdio>
 #include "vector/vector.cpp"
 
-void printTextOnStart(){
+void printTextOnStart() {
     printf(" DATA STRUCUTRES EXAMPLES\n");
     printf("==============================================\n");
     printf(" For more informations please read \"README.md\"\n");
