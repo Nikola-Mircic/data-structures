@@ -5,7 +5,7 @@
 #include <algorithm>
 
 template <class TYPE>
-class myVector {
+class Vector {
 private:
     int reserved_size;//Maximal number of elements in main_arr
     int curr_size;//Current number of elements in main_arr
@@ -23,7 +23,7 @@ private:
     }
 public:
     //Creates empty vector for only 1 element
-    myVector() {
+    Vector() {
         curr_size = 0;
         reserved_size = 1;
         main_arr = new TYPE[1];
@@ -31,7 +31,7 @@ public:
     }
 
     //Creates empty vector for n elements
-    myVector(const int n) {
+    Vector(const int n) {
         curr_size = 0;
         reserved_size = n;
         main_arr = new TYPE[n];
@@ -39,7 +39,7 @@ public:
     };
 
     //Creates vector with elements of an array in range [arr_start, arr_end)
-    myVector(const TYPE* arr_start, const TYPE* arr_end) {
+    Vector(const TYPE* arr_start, const TYPE* arr_end) {
         int n = arr_end - arr_start;
 
         curr_size = 0;
@@ -53,7 +53,7 @@ public:
     };
 
     //Creates vector with elements of the 'vec' vector
-    myVector(const myVector<TYPE>& vec) {
+    Vector(const Vector<TYPE>& vec) {
         curr_size = vec.curr_size;
         reserved_size = vec.reserved_size;
         main_arr = new TYPE[reserved_size];
@@ -74,7 +74,7 @@ public:
         for (TYPE* i = arr_start; i != arr_end; ++i)
             add_element(*i);
     }
-    
+
     //Returns value of element at index 'idx'
     TYPE at(int idx) {
         return main_arr[idx];
@@ -101,7 +101,7 @@ public:
 
     //Returns pointer to the last element of vector
     TYPE* last() {
-        return main_arr+curr_size;
+        return main_arr + curr_size;
     }
 
     //Remove first element with value equals to x
@@ -150,16 +150,14 @@ public:
 
     //Operators overloading:
     //Overloading "+" operator
-    template <class T> myVector<T> operator + (myVector<T> & vector) {
-        add_elements(vector.first(),vector.last());
+    template <class T> Vector<T> operator + (Vector<T>& vector) {
+        add_elements(vector.first(), vector.last());
         return *this;
     };
 
     //Overloading "+=" operator
-    template <class T> myVector<T> operator += (myVector<T>& vector) {
+    template <class T> Vector<T> operator += (Vector<T>& vector) {
         add_elements(vector.first(), vector.last());
         return *this;
     };
 };
-
-
