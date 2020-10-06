@@ -15,8 +15,8 @@ private:
 
 	Node* createNode(TYPE value) {
 		Node* temp = new Node();
-		temp->value = value;
-		temp->link = nullptr;
+		temp->Node::value = value;
+		temp->Node::link = nullptr;
 		return temp;
 	};
 
@@ -37,8 +37,9 @@ public:
 	LinkedList(const TYPE* arr_start, const TYPE* arr_end) {
 		init();
 
-		for (TYPE* i = 0; i != arr_end; ++i) {
-			insert(*i);
+		int n = arr_end - arr_start;
+		for (int i = 0; i < n; ++i) {
+			insert(arr_start[i]);
 		}
 	};
 
@@ -81,10 +82,35 @@ public:
 		++size;
 	};
 
+	TYPE& get(int index) {
+		if (index == size - 1)
+			return last->Node::value;
+		else {
+			Node* temp = first;
+			while (index > 0) {
+				temp = temp->Node::link;
+				--index;
+			}
+			return temp->Node::value;
+		}
+	}
+
+	TYPE& getFirst() {
+		return first->Node::value;
+	};
+
+	TYPE& getLast() {
+		return last->Node::value;
+	};
+
 	void print() {
 		for (Node* i = first; i != last->Node::link; i = i->Node::link) {
 			std::cout << i->Node::value << " ";
 		}
 		std::cout << std::endl;
 	};
+
+	int getSize() {
+		return size;
+	}
 };
