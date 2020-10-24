@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <cstdlib>
 
 template<class TYPE>
 class LinkedList {
@@ -21,14 +23,11 @@ private:
 	};
 
 	void init() {
-		first = new Node();
-		last = new Node();
-		first->Node::value = NULL;
-		first->Node::link = nullptr;
-		last->Node::value = NULL;
-		last->Node::link = nullptr;
+		first = nullptr;
+		last = nullptr;
 		size = 0;
 	}
+
 public:
 	LinkedList() {
 		init();
@@ -44,11 +43,12 @@ public:
 	};
 
 	void insert(TYPE element) {
-		if (first->Node::value == NULL) {
+		if (first == nullptr) {
 			first = createNode(element);
+			last = first;
 		}
 		else {
-			if (last->Node::value == NULL) {
+			if (last == first) {
 				last = createNode(element);
 				if (size == 1)
 					first->Node::link = last;
@@ -82,6 +82,10 @@ public:
 		++size;
 	};
 
+	void removeAll() {
+		this->eraseAll(&first);
+	}
+
 	TYPE& get(int index) {
 		if (index == size - 1)
 			return last->Node::value;
@@ -92,6 +96,24 @@ public:
 				--index;
 			}
 			return temp->Node::value;
+		}
+	}
+
+	void swap(const int index1, const int index2) {
+		int idx = 0, found = 0;
+		Node** toSwap = (Node**) calloc(2,sizeof(Node*));
+		Node* temp = first;
+		while (found < 2 && idx < size) {
+			if (idx == index1 || idx == index2) {
+				toSwap[found++] = temp;
+			}
+			temp = temp->Node::link;
+			++idx;
+		}
+		if (found == 2) {
+			TYPE t = toSwap[0]->Node::value;
+			toSwap[0]->Node::value = toSwap[1]->Node::value;
+			toSwap[1]->Node::value = t;
 		}
 	}
 
@@ -110,7 +132,42 @@ public:
 		std::cout << std::endl;
 	};
 
+	void custom_print(void printFunction(TYPE& x)) {
+		for (Node* i = first; i != last->Node::link; i = i->Node::link) {
+			printFunction(i->Node::value);
+		}
+		std::cout << std::endl;
+	}
+
 	int getSize() {
 		return size;
+	}
+
+	void operator = (const LinkedList<TYPE>& list) {
+		if (this->size > 0) {
+			init();
+		}
+		if (list.first != nullptr) {
+			for (Node* i = list.first; i != list.last->Node::link; i = i->Node::link) {
+				this->insert(i->Node::value);
+			}
+		}
+	}
+
+	template<class T> 
+	LinkedList<T> operator + (const LinkedList<T>& a) {
+		LinkedList<T>* temp = new LinkedList<T>();
+		if (this->first != nullptr) {
+			for (Node* i = this->first; i != this->last->Node::link; i = i->Node::link) {
+				temp->insert(i->Node::value);
+			}
+		}
+		if (a.first != nullptr) {
+			for (Node* i = a.first; i != a.last->Node::link; i = i->Node::link) {
+				temp->insert(i->Node::value);
+			}
+		}
+
+		return *temp;
 	}
 };

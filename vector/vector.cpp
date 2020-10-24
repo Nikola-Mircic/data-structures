@@ -142,9 +142,9 @@ public:
     }
 
     //Print elements using passed function
-    template<class PRINT_TYPE> void custom_print(PRINT_TYPE func(TYPE x)) {
+    void custom_print(void func(TYPE x)) {
         for (int i = 0; i < curr_size; ++i)
-            std::cout << func(main_arr[i]) << " ";
+            func(main_arr[i]);
         std::cout << std::endl;
     };
 
